@@ -3,13 +3,21 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-var sassMiddleware = require("node-sass-middleware");
-
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
+var productRouter = require("./routes/product");
+const mongoose = require("mongoose");
+
 var app = express();
 
 require("dotenv").config();
+mongoose.connect(
+  process.env.DB_URL,
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  (err) => {
+    console.log(err ? err : "connected to database");
+  }
+);
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -38,6 +46,7 @@ if (process.env.NODE_ENV === "development") {
 
 app.use(require("webpack-hot-middleware")(compiler));
 
+app.use("/api/v1/products", productRouter);
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 

@@ -13,10 +13,12 @@
     "ejs": "~2.6.1",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
+    "mongoose": "^5.12.14",
     "morgan": "~1.9.1",
     "node-sass-middleware": "0.11.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "slugify": "^1.5.3",
     "webpack": "^5.40.0",
     "webpack-dev-middleware": "^5.0.0",
     "webpack-hot-middleware": "^2.25.0"
