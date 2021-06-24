@@ -2,36 +2,26 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 var slugify = require("slugify");
 
-const statusEnum = ["active", "draft"];
+const statusEnum = ["active", "draft", "archived"];
 
 const ProductSchema = new Schema(
   {
     title: { type: String, required: true },
     description: { type: String },
     imgaes: [{ type: String, required: true }],
-    pricing: {
-      price: { type: Number, required: true },
-      comparePrice: { type: Number },
-      costPerItem: { type: Number },
-    },
-    inventory: {
-      trackQty: { type: Boolean, default: true },
-      outOfStock: { type: Boolean, default: false },
-      quntity: {
-        available: { type: Number },
-        incoming: { type: Number },
-      },
-    },
+    price: { type: Number, required: true },
+    comparePrice: { type: Number },
+    costPerItem: { type: Number },
+    trackQty: { type: Boolean, default: true },
+    outOfStock: { type: Boolean, default: false },
+    available: { type: Number },
+    incoming: { type: Number, default: 0 },
     weight: { type: Number },
-    variants: {
-      addVariant: { type: Boolean, default: false },
-      options: [{ option: { type: String }, optionVal: [{ type: String }] }],
-    },
+    addVariant: { type: Boolean, default: false },
+    options: [{ option: { type: String }, optionVal: [{ type: String }] }],
     productStatus: { type: String, enum: statusEnum, default: "draft" },
-    organization: {
-      productType: { type: String, required: true },
-      vendor: { type: String, required: true },
-    },
+    productType: { type: String, required: true },
+    vendor: { type: String, required: true },
     tags: [{ type: String }],
     slug: { type: String, unique: true },
   },

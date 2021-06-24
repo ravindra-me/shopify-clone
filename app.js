@@ -34,17 +34,13 @@ if (process.env.NODE_ENV === "development") {
   var webpack = require("webpack");
   var webpackConfig = require("./webpack.config");
   var compiler = webpack(webpackConfig);
-
+  app.use(require("webpack-hot-middleware")(compiler));
   app.use(
     require("webpack-dev-middleware")(compiler, {
       publicPath: webpackConfig.output.publicPath,
     })
   );
-
-  app.use(require("webpack-hot-middleware")(compiler));
 }
-
-app.use(require("webpack-hot-middleware")(compiler));
 
 app.use("/api/v1/products", productRouter);
 app.use("/", indexRouter);

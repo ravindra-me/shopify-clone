@@ -3,9 +3,17 @@ const auth = require("../middleware/auth");
 module.exports = {
   listAllProduct: async (req, res, next) => {
     try {
-      const allProducts = await Product.find({});
+      const query = {};
+      if (req.query.status) {
+        status = req.query.status.toLowerCase();
+        query.productStatus = { $in: [status] };
+      }
+      console.log(query);
+      const allProducts = await Product.find(query);
+      console.log(allProducts);
       res.json({ products: allProducts });
     } catch (error) {
+      console.log(error);
       res.status(400).send(error);
     }
   },
