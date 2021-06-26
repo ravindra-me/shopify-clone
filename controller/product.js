@@ -1,5 +1,6 @@
-const Product = require("../model/Product");
-const auth = require("../middleware/auth");
+const Product = require('../model/Product');
+const auth = require('../middleware/auth');
+const { find } = require('../model/Product');
 module.exports = {
   listAllProduct: async (req, res, next) => {
     try {
@@ -8,9 +9,9 @@ module.exports = {
         status = req.query.status.toLowerCase();
         query.productStatus = { $in: [status] };
       }
-      console.log(query);
+      console.log(query, 'query');
       const allProducts = await Product.find(query);
-      console.log(allProducts);
+
       res.json({ products: allProducts });
     } catch (error) {
       console.log(error);
@@ -62,6 +63,23 @@ module.exports = {
       const deleteProduct = await Product.findOneAndDelete({ slug: slug });
       res.json({ product: deleteProduct });
     } catch (error) {
+      res.status(400).send(error);
+    }
+  },
+  putAction: async (req, res, next) => {
+    try {
+      const { slugs, action } = req.body.product;
+      if (action === 'active' || action === 'draft') {
+        const products = await Product.updateMany({}, {})
+          .where('slug')
+          .in(slugs)
+          .set({ productStatus: action });
+      }
+      const allProducts = await Product.find({});
+
+      res.json({ products: allProducts });
+    } catch (error) {
+      console.log(error);
       res.status(400).send(error);
     }
   },

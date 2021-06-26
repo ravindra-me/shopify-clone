@@ -1,23 +1,13 @@
 {
-    "title": "product1",
-    "description": "it is a product one",
-    "imgaes": "image1",
-    "pricing": {
-        "price": 2000,
-        "comparePrice": 1200,
-        "costPerItem": 200
-    },
-    "inventory": {
-        "quntity": {
-            "available": 100
-        }
-    },
-    "organization": {
-        "productType": "random",
-        "vendor": "random"
-    },
-    "tags": [
-        "abs",
-        "ebg"
-    ]
+  "title": "Black Shirt",
+  "description": "It is made by cotton",
+  "imgaes": ["image1"],
+  "price": 2000,
+  "comparePrice": 3000,
+  "costPerItem": 1000,
+  "available": 100,
+  "weight": 5,
+  "productType": "shirt",
+  "vendor": "Lee",
+  "tags": ["cotton", "Black"]
 }

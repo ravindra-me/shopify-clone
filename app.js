@@ -1,50 +1,50 @@
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
-var productRouter = require("./routes/product");
-const mongoose = require("mongoose");
+var createError = require('http-errors');
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
+var productRouter = require('./routes/product');
+const mongoose = require('mongoose');
 
 var app = express();
 
-require("dotenv").config();
+require('dotenv').config();
 mongoose.connect(
   process.env.DB_URL,
   { useNewUrlParser: true, useUnifiedTopology: true },
   (err) => {
-    console.log(err ? err : "connected to database");
+    console.log(err ? err : 'connected to database');
   }
 );
 
 // view engine setup
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
-if (process.env.NODE_ENV === "development") {
-  app.use(logger("dev"));
+if (process.env.NODE_ENV === 'development') {
+  app.use(logger('dev'));
 }
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
-if (process.env.NODE_ENV === "development") {
-  var webpack = require("webpack");
-  var webpackConfig = require("./webpack.config");
+app.use(express.static(path.join(__dirname, 'public')));
+if (process.env.NODE_ENV === 'development') {
+  var webpack = require('webpack');
+  var webpackConfig = require('./webpack.config');
   var compiler = webpack(webpackConfig);
-  app.use(require("webpack-hot-middleware")(compiler));
+  app.use(require('webpack-hot-middleware')(compiler));
   app.use(
-    require("webpack-dev-middleware")(compiler, {
+    require('webpack-dev-middleware')(compiler, {
       publicPath: webpackConfig.output.publicPath,
     })
   );
 }
 
-app.use("/api/v1/products", productRouter);
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
+app.use('/api/v1/products', productRouter);
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -55,11 +55,11 @@ app.use(function (req, res, next) {
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
-
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  console.log(err);
   // render the error page
   res.status(err.status || 500);
-  res.render("error");
+  res.render('error');
 });
 
 module.exports = app;

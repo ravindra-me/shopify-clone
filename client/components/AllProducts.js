@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
-import { listAllProducts } from "../action/productActions";
-import FilterForAll from "./FilterForAll";
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { listAllProducts } from '../action/productActions';
+import FilterForAll from './FilterForAll';
 function AllProducts(props) {
   return (
     <section className="flex-80 px-8 bg-gray-200 ">
@@ -21,12 +22,12 @@ function AllProducts(props) {
                 </a>
               </li>
               <li className="ml-4">
-                <a
-                  href=""
+                <Link
+                  to="/admin/products/new"
                   className="bg-green-500 px-4 py-2 text-white rounded inline-block	"
                 >
                   Add Product
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>

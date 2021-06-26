@@ -59,3 +59,19 @@
 .main-section {
   padding-top: 72px;
 }
+
+/* action edit  */
+.action-sub-nav {
+  width: 12.5rem;
+  transform: translate(-30%);
+  height: 150px;
+  overflow: auto;
+  border-radius: 0.225rem;
+  background-color: whitesmoke;
+  box-shadow: 0 0.25rem 0.25rem whitesmoke;
+}
+
+.img {
+  width: 100%;
+  object-fit: cover;
+}

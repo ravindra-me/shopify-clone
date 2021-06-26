@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=development node ./bin/www",
+    "start": "NODE_ENV=development CLIENT=true node ./bin/www",
     "build": "NODE_ENV=production webpack --config ./webpack.config.js --mode=production",
     "server": "nodemon ./bin/www"
   },
@@ -18,7 +18,6 @@
     "http-errors": "~1.6.3",
     "mongoose": "^5.12.14",
     "morgan": "~1.9.1",
-    "node-sass-middleware": "0.11.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.4",
@@ -39,6 +38,8 @@
     "css-loader": "^5.2.6",
     "postcss": "^8.3.5",
     "postcss-loader": "^6.1.0",
+    "sass": "^1.35.1",
+    "sass-loader": "^12.1.0",
     "style-loader": "^2.0.0",
     "tailwindcss": "^2.2.2",
     "webpack-cli": "^4.7.2",
