@@ -4,7 +4,7 @@ const webpack = require("webpack");
 module.exports = {
   mode: "development",
   devtool: "inline-source-map",
-  entry: ["./client/index.js"],
+  entry: ["webpack-hot-middleware/client", "./client/index.js"],
   output: {
     filename: "bundle.js",
     path: path.join(__dirname, "dist/bundle"),
