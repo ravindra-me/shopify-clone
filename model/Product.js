@@ -1,8 +1,8 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const { Schema } = mongoose;
-var slugify = require("slugify");
+var slugify = require('slugify');
 
-const statusEnum = ["active", "draft", "archived"];
+const statusEnum = ['active', 'draft', 'archived'];
 
 const ProductSchema = new Schema(
   {
@@ -19,7 +19,7 @@ const ProductSchema = new Schema(
     weight: { type: Number },
     addVariant: { type: Boolean, default: false },
     options: [{ option: { type: String }, optionVal: [{ type: String }] }],
-    productStatus: { type: String, enum: statusEnum, default: "draft" },
+    productStatus: { type: String, enum: statusEnum, default: 'draft' },
     productType: { type: String, required: true },
     vendor: { type: String, required: true },
     tags: [{ type: String }],
@@ -28,11 +28,11 @@ const ProductSchema = new Schema(
   { timestamps: true }
 );
 
-ProductSchema.pre("save", async function (next) {
-  this.slug = slugify(this.title, "-");
+ProductSchema.pre('save', async function (next) {
+  this.slug = slugify(this.title, '-');
   next();
 });
 
-const Product = mongoose.model("Product", ProductSchema);
+const Product = mongoose.model('Product', ProductSchema);
 
 module.exports = Product;

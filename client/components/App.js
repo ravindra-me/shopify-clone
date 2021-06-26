@@ -1,23 +1,19 @@
-import React from "react";
-import Sidebar from "./Sidebar";
-import { Route } from "react-router-dom";
-import ProductRouter from "./ProductRouter";
-import Header from "./Header";
-
-import Home from "./Home";
-import EditProduct from "./EditProduct";
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+import Sidebar from './Sidebar';
+import ProductRouter from './ProductRouter';
+import Header from './Header';
+import AddProduct from './AddProduct';
+import Home from './Home';
 function App() {
   return (
     <>
       <Header />
       <section className="main-section">
-        <div className="container flex justify-between">
+        <div className=" w-full flex justify-between">
           <Sidebar className="" />
-          <Route path="/admin/products" exact>
+          <Route path="/admin/products">
             <ProductRouter />
-          </Route>
-          <Route path="/admin/products/:slug">
-            <EditProduct />
           </Route>
           <Route path="/admin" component={Home} exact />
         </div>

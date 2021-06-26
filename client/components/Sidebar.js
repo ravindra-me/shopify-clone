@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link,
   NavLink,
-} from "react-router-dom";
+} from 'react-router-dom';
 
 function Sidebar(props) {
   const [state, setState] = useState({ isTrue: false });
   const { location } = useHistory();
   useEffect(() => {
-    if (location.pathname === "/admin/products") {
+    if (location.pathname === '/admin/products') {
       setState({ isTrue: true });
     }
   }, []);
@@ -46,6 +46,7 @@ function Sidebar(props) {
                 setState({ isTrue: true });
               }}
               className="block pb-2"
+              exact
             >
               Products
             </NavLink>
@@ -62,7 +63,7 @@ function Sidebar(props) {
                 </li>
               </ul>
             ) : (
-              ""
+              ''
             )}
           </li>
           <li className="py-2">

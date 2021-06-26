@@ -1,16 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useSelector } from 'react-redux';
-import { editSingleProduct, updateEditProduct } from '../action/productActions';
+import {
+  editSingleProduct,
+  updateEditProduct,
+  uploadImage,
+} from '../action/productActions';
 import { useParams, Link } from 'react-router-dom';
-function EditProduct(props) {
-  const { slug } = useParams();
-  const [product, updateProduct] = useState(null);
-  useEffect(async () => {
-    const data = await props.dispatch(editSingleProduct(slug));
-    updateProduct({ ...product, ...data });
-  }, []);
 
-  const handleChange = (event) => {
+function AddProduct(props) {
+  console.log('add product');
+  const { slug } = useParams();
+  const [product, updateProduct] = useState({
+    title: '',
+    description: '',
+    imgaes: [],
+    price: 0,
+    comparePrice: 0,
+    costPerItem: 0,
+    trackQty: true,
+    outOfStock: false,
+    available: 0,
+    incoming: 0,
+    weight: 0,
+    productStatus: 'draft',
+    productType: '',
+    vendor: '',
+    tags: [],
+  });
+
+  const handleChange = async (event) => {
+    console.log(event.target.value);
+
     if (event.target.name === 'tags') {
       if (event.target.value.includes(',') && event.charCode === 13) {
         console.log(product.tags.concat(event.target.value.split(',')));
@@ -29,15 +49,35 @@ function EditProduct(props) {
         });
 
         return;
+      } else {
+        return;
+      }
+    }
+
+    if (event.target.name === 'image') {
+      const imageEtentions = ['jpg', 'jpeg', 'png', 'svg'];
+      if (
+        event.target.files[0] &&
+        imageEtentions.includes(event.target.files[0].name.split('.')[1])
+      ) {
+        const url = await uploadImage(event.target.files[0]);
+        console.log(url);
+        updateProduct({ ...product, imgaes: product.imgaes.concat(url) });
+      } else {
+        console.log(
+          'this file formate is not accepted please select another image'
+        );
       }
     } else {
       updateProduct({ ...product, [event.target.name]: event.target.value });
     }
   };
 
+  // https://api.cloudinary.com/v1_1/dylsn0syr ▼
+
   const handleSubmit = async () => {
     try {
-      const data = await props.dispatch(updateEditProduct(slug, product));
+      console.log(product);
     } catch (error) {
       console.log(error);
     }
@@ -60,7 +100,13 @@ function EditProduct(props) {
     productStatus,
     productType,
     tags,
+    imgaes,
   } = product;
+
+  const profit = price - costPerItem;
+  const margin = ((price - costPerItem) / price) * 100;
+
+  const img = document.querySelector('#image');
 
   return (
     <section className="w-full bg-gray-100 py-8">
@@ -73,16 +119,12 @@ function EditProduct(props) {
             >
               Back
             </Link>
-            <p className="mx-4">{title}</p>
-            <span className="px-2 bg-blue-500 rounded-full text-white">
-              {productStatus}
-            </span>
           </div>
           <div
             onClick={handleSubmit}
             className="px-4 py-2 bg-green-500 text-white font-bold"
           >
-            Update
+            Add Product
           </div>
         </div>
         <main className="">
@@ -116,7 +158,43 @@ function EditProduct(props) {
               </div>
               <div className="bg-white mt-2  p-8 rounded">
                 <h4 className="font-bold">Media</h4>
-                <div>image</div>
+                <div className="text-center border dash p-8  my-4 bg-blue-100">
+                  {imgaes.map((img) => {
+                    return (
+                      <div className="relative w-40">
+                        <img src={img} className=" w-full" />
+                        <span
+                          className="absolute -top-px right-0"
+                          onClick={() =>
+                            updateProduct({
+                              ...product,
+                              imgaes: product.imgaes.filter(
+                                (image) => image !== img
+                              ),
+                            })
+                          }
+                        >
+                          <i className="fas fa-times text-2xl"></i>
+                        </span>
+                      </div>
+                    );
+                  })}
+                  <label for="image">
+                    <img
+                      width="40"
+                      src="data:image/svg+xml,%3csvg fill='none' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M20 10a10 10 0 11-20 0 10 10 0 0120 0zM5.3 8.3l4-4a1 1 0 011.4 0l4 4a1 1 0 01-1.4 1.4L11 7.4V15a1 1 0 11-2 0V7.4L6.7 9.7a1 1 0 01-1.4-1.4z' fill='%235C5F62'/%3e%3c/svg%3e"
+                      alt=""
+                      className="mx-auto"
+                    ></img>
+                  </label>
+                  <input
+                    type="file"
+                    id="image"
+                    className="mt-4"
+                    name="image"
+                    onChange={handleChange}
+                  ></input>
+                </div>
               </div>
               <div>
                 <div className="bg-white mt-2  p-8 rounded">
@@ -160,11 +238,11 @@ function EditProduct(props) {
                   <div className="flex">
                     <div className="mx-8">
                       <p>Margin</p>
-                      <p>90%</p>
+                      <p>{margin ? margin : 0}</p>
                     </div>
                     <div>
                       <p>Profit</p>
-                      <p>₹1,800.00</p>
+                      <p>₹{profit}</p>
                     </div>
                   </div>
                 </div>
@@ -242,29 +320,33 @@ function EditProduct(props) {
                     className="block border  p-1 mt-1"
                     type="text"
                     placeholder="vintage, cotton, summer"
-                    onKeyPress={handleChange}
                     name="tags"
+                    onKeyPress={handleChange}
                   />
                   <div className="flex justify-between items-center mt-4">
-                    {tags?.map((tag) => {
-                      return (
-                        <p className="px-4 py-2 bg-gray-200 rounded-2xl ">
-                          {tag}{' '}
-                          <span className="ml-2 cursor">
-                            <i
-                              className="fas fa-times"
-                              onClick={() => {
-                                let updateTags = tags.filter((t) => tag !== t);
-                                updateProduct({
-                                  ...product,
-                                  tags: updateTags,
-                                });
-                              }}
-                            ></i>
-                          </span>
-                        </p>
-                      );
-                    })}
+                    {tags.length > 0
+                      ? tags.map((tag) => {
+                          return (
+                            <p className="px-4 py-2 bg-gray-200 rounded-2xl ">
+                              {tag}{' '}
+                              <span className="ml-2 cursor">
+                                <i
+                                  className="fas fa-times"
+                                  onClick={() => {
+                                    let updateTags = tags.filter(
+                                      (t) => tag !== t
+                                    );
+                                    updateProduct({
+                                      ...product,
+                                      tags: updateTags,
+                                    });
+                                  }}
+                                ></i>
+                              </span>
+                            </p>
+                          );
+                        })
+                      : ''}
                   </div>
                 </div>
               </div>
@@ -279,4 +361,4 @@ const mapStateToProps = (state) => {
   return state;
 };
 
-export default connect(mapStateToProps)(EditProduct);
+export default connect(mapStateToProps)(AddProduct);
