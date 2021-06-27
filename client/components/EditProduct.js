@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect, useSelector } from 'react-redux';
 import { editSingleProduct, updateEditProduct } from '../action/productActions';
 import { useParams, Link } from 'react-router-dom';
+import Variant from './Variant';
 function EditProduct(props) {
   const { slug } = useParams();
   const [product, updateProduct] = useState(null);
@@ -60,7 +61,11 @@ function EditProduct(props) {
     productStatus,
     productType,
     tags,
+    variant,
+    imgaes,
   } = product;
+
+  console.log(imgaes, variant, product);
 
   return (
     <section className="w-full bg-gray-100 py-8">
@@ -69,9 +74,9 @@ function EditProduct(props) {
           <div className="flex items-center">
             <Link
               to="/admin/products"
-              className="px-4 py-2 bg-green-500 rounded-xl"
+              className="px-4 py-1 bg-gray-300 rounded text-xl"
             >
-              Back
+              <i class="fas fa-arrow-left"></i>
             </Link>
             <p className="mx-4">{title}</p>
             <span className="px-2 bg-blue-500 rounded-full text-white">
@@ -82,7 +87,7 @@ function EditProduct(props) {
             onClick={handleSubmit}
             className="px-4 py-2 bg-green-500 text-white font-bold"
           >
-            Update
+            <i class="fas fa-upload"></i> Update
           </div>
         </div>
         <main className="">
@@ -116,7 +121,43 @@ function EditProduct(props) {
               </div>
               <div className="bg-white mt-2  p-8 rounded">
                 <h4 className="font-bold">Media</h4>
-                <div>image</div>
+                <div className="text-center border dash p-8  my-4 bg-blue-100">
+                  {imgaes.map((img) => {
+                    return (
+                      <div className="relative w-40">
+                        <img src={img} className=" w-full" />
+                        <span
+                          className="absolute -top-px right-0"
+                          onClick={() =>
+                            updateProduct({
+                              ...product,
+                              imgaes: product.imgaes.filter(
+                                (image) => image !== img
+                              ),
+                            })
+                          }
+                        >
+                          <i className="fas fa-times text-2xl"></i>
+                        </span>
+                      </div>
+                    );
+                  })}
+                  <label for="image">
+                    <img
+                      width="40"
+                      src="data:image/svg+xml,%3csvg fill='none' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill-rule='evenodd' clip-rule='evenodd' d='M20 10a10 10 0 11-20 0 10 10 0 0120 0zM5.3 8.3l4-4a1 1 0 011.4 0l4 4a1 1 0 01-1.4 1.4L11 7.4V15a1 1 0 11-2 0V7.4L6.7 9.7a1 1 0 01-1.4-1.4z' fill='%235C5F62'/%3e%3c/svg%3e"
+                      alt=""
+                      className="mx-auto"
+                    ></img>
+                  </label>
+                  <input
+                    type="file"
+                    id="image"
+                    className="mt-4"
+                    name="image"
+                    onChange={handleChange}
+                  ></input>
+                </div>
               </div>
               <div>
                 <div className="bg-white mt-2  p-8 rounded">
@@ -169,6 +210,16 @@ function EditProduct(props) {
                   </div>
                 </div>
                 <div className="mt-1 bg-white rounded p-8 ">
+                  <h4 className="font-bold mb-8">Invertory</h4>
+                  <input
+                    className="block border w-full p-1"
+                    type="number"
+                    value={available}
+                    onChange={handleChange}
+                    name="weight"
+                  />
+                </div>
+                <div className="mt-1 bg-white rounded p-8 ">
                   <h4 className="font-bold mb-8">Weight</h4>
                   <input
                     className="block border w-full p-1"
@@ -180,11 +231,23 @@ function EditProduct(props) {
                 </div>
                 <div className="mt-1 bg-white rounded p-8">
                   <h4 className="font-bold mb-4">Variants</h4>
-                  <input className="mr-4" type="checkbox" />
+                  <input
+                    className="mr-4"
+                    type="checkbox"
+                    checked={variant.length > 0 ? true : false}
+                  />
                   <label for="">
                     This product has multiple options, like different sizes or
                     colors
                   </label>
+                  {variant.length > 0 ? (
+                    <Variant
+                      variant={product.variant}
+                      updateProduct={updateProduct}
+                      product={product}
+                      handleChange={handleChange}
+                    />
+                  ) : null}
                 </div>
               </div>
             </div>

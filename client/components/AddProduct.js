@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useSelector } from 'react-redux';
-import {
-  editSingleProduct,
-  updateEditProduct,
-  uploadImage,
-} from '../action/productActions';
+import { uploadImage, addProduct } from '../action/productActions';
 import { useParams, Link } from 'react-router-dom';
+
+import Variant from './Variant';
 
 function AddProduct(props) {
   console.log('add product');
@@ -13,7 +11,7 @@ function AddProduct(props) {
   const [product, updateProduct] = useState({
     title: '',
     description: '',
-    imgaes: [],
+    images: [],
     price: 0,
     comparePrice: 0,
     costPerItem: 0,
@@ -26,10 +24,13 @@ function AddProduct(props) {
     productType: '',
     vendor: '',
     tags: [],
+    optVariant: false,
+    color: false,
+    variant: [],
   });
 
   const handleChange = async (event) => {
-    console.log(event.target.value);
+    console.log(event.target.name);
 
     if (event.target.name === 'tags') {
       if (event.target.value.includes(',') && event.charCode === 13) {
@@ -62,7 +63,7 @@ function AddProduct(props) {
       ) {
         const url = await uploadImage(event.target.files[0]);
         console.log(url);
-        updateProduct({ ...product, imgaes: product.imgaes.concat(url) });
+        updateProduct({ ...product, images: product.images.concat(url) });
       } else {
         console.log(
           'this file formate is not accepted please select another image'
@@ -77,7 +78,15 @@ function AddProduct(props) {
 
   const handleSubmit = async () => {
     try {
-      console.log(product);
+      props.dispatch(
+        addProduct({
+          ...product,
+          price: +product.price,
+          comparePrice: +product.comparePrice,
+          costPerItem: +product.costPerItem,
+          variant: product.variant,
+        })
+      );
     } catch (error) {
       console.log(error);
     }
@@ -100,13 +109,13 @@ function AddProduct(props) {
     productStatus,
     productType,
     tags,
-    imgaes,
+    images,
+    variant,
+    optVariant,
   } = product;
 
   const profit = price - costPerItem;
   const margin = ((price - costPerItem) / price) * 100;
-
-  const img = document.querySelector('#image');
 
   return (
     <section className="w-full bg-gray-100 py-8">
@@ -115,9 +124,9 @@ function AddProduct(props) {
           <div className="flex items-center">
             <Link
               to="/admin/products"
-              className="px-4 py-2 bg-green-500 rounded-xl"
+              className="px-4 py-1 bg-gray-300 rounded text-xl"
             >
-              Back
+              <i class="fas fa-arrow-left"></i>
             </Link>
           </div>
           <div
@@ -159,7 +168,7 @@ function AddProduct(props) {
               <div className="bg-white mt-2  p-8 rounded">
                 <h4 className="font-bold">Media</h4>
                 <div className="text-center border dash p-8  my-4 bg-blue-100">
-                  {imgaes.map((img) => {
+                  {images.map((img) => {
                     return (
                       <div className="relative w-40">
                         <img src={img} className=" w-full" />
@@ -168,7 +177,7 @@ function AddProduct(props) {
                           onClick={() =>
                             updateProduct({
                               ...product,
-                              imgaes: product.imgaes.filter(
+                              images: product.images.filter(
                                 (image) => image !== img
                               ),
                             })
@@ -247,6 +256,16 @@ function AddProduct(props) {
                   </div>
                 </div>
                 <div className="mt-1 bg-white rounded p-8 ">
+                  <h4 className="font-bold mb-8">Inventory</h4>
+                  <input
+                    className="block border w-full p-1"
+                    type="number"
+                    value={available}
+                    onChange={handleChange}
+                    name="available"
+                  />
+                </div>
+                <div className="mt-1 bg-white rounded p-8 ">
                   <h4 className="font-bold mb-8">Weight</h4>
                   <input
                     className="block border w-full p-1"
@@ -258,11 +277,29 @@ function AddProduct(props) {
                 </div>
                 <div className="mt-1 bg-white rounded p-8">
                   <h4 className="font-bold mb-4">Variants</h4>
-                  <input className="mr-4" type="checkbox" />
+                  <input
+                    className="mr-4"
+                    type="checkbox"
+                    onChange={() => {
+                      updateProduct({
+                        ...product,
+                        optVariant: !product.optVariant,
+                        variant: [{ name: 'size', options: [] }],
+                      });
+                    }}
+                  />
                   <label for="">
                     This product has multiple options, like different sizes or
                     colors
                   </label>
+                  {optVariant ? (
+                    <Variant
+                      variant={product.variant}
+                      updateProduct={updateProduct}
+                      product={product}
+                      handleChange={handleChange}
+                    />
+                  ) : null}
                 </div>
               </div>
             </div>

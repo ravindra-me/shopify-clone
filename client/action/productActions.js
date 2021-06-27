@@ -72,10 +72,22 @@ const uploadImage = async (name) => {
   return data.secure_url;
 };
 
+const addProduct = (postData) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post('/api/v1/products/new', {
+        product: postData,
+      });
+      console.log(data, 'mata mar dia');
+    } catch (error) {}
+  };
+};
+
 export {
   listAllProducts,
   editSingleProduct,
   updateEditProduct,
   updateAction,
+  addProduct,
   uploadImage,
 };

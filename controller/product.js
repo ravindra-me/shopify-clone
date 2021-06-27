@@ -22,6 +22,7 @@ module.exports = {
     const { product } = req.body;
     try {
       const newProduct = await Product.create(product);
+      console.log(newProduct);
       res.json({ product: newProduct });
     } catch (error) {
       res.send(error);
@@ -74,6 +75,10 @@ module.exports = {
           .where('slug')
           .in(slugs)
           .set({ productStatus: action });
+      }
+      if (action === 'delete') {
+        const products = await Product.deleteMany({}).where('slug').in(slugs);
+        console.log(products);
       }
       const allProducts = await Product.find({});
 

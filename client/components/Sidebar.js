@@ -23,20 +23,20 @@ function Sidebar(props) {
           <li className="py-2">
             <NavLink
               to="/admin"
-              className="block pb-2"
+              className="block pb-2 text-xl"
               activeClassName="active-sidebar text-green-500"
               exact
             >
-              Home
+              <i class="fas fa-home mr-2"></i> Home
             </NavLink>
           </li>
           <li className="py-2">
             <NavLink
               to="/admin/order"
-              className="block pb-2"
+              className="block pb-2 text-xl"
               activeClassName="active-sidebar text-green-500"
             >
-              Orders
+              <i class="fas fa-cart-arrow-down mr-2"></i> Orders
             </NavLink>
           </li>
           <li className="py-2">
@@ -45,18 +45,18 @@ function Sidebar(props) {
               onClick={() => {
                 setState({ isTrue: true });
               }}
-              className="block pb-2"
+              className="block pb-2 text-xl"
               exact
             >
-              Products
+              <i class="fas fa-tag mr-4"></i> Products
             </NavLink>
             {state.isTrue === true ? (
-              <ul className="ml-4">
+              <ul className="ml-2">
                 <li className="py-2">
                   <NavLink
                     to="/admin/products"
                     activeClassName="active-sidebar text-green-500"
-                    className="block pb-2"
+                    className="block pb-2 text-xl"
                   >
                     All Products
                   </NavLink>
@@ -67,10 +67,15 @@ function Sidebar(props) {
             )}
           </li>
           <li className="py-2">
-            <NavLink to="/admin">Customers</NavLink>
+            <NavLink to="/admin" className="text-xl">
+              <i class="fas fa-user-alt mr-2"></i>Customers
+            </NavLink>
           </li>
           <li className="py-2">
-            <NavLink to="/admin">Analytics</NavLink>
+            <NavLink to="/admin" className="text-xl">
+              {' '}
+              <i class="fas fa-signal mr-2"></i>Analytics
+            </NavLink>
           </li>
         </ul>
       </div>

@@ -8,7 +8,7 @@ const ProductSchema = new Schema(
   {
     title: { type: String, required: true },
     description: { type: String },
-    imgaes: [{ type: String, required: true }],
+    images: [{ type: String, required: true }],
     price: { type: Number, required: true },
     comparePrice: { type: Number },
     costPerItem: { type: Number },
@@ -17,8 +17,7 @@ const ProductSchema = new Schema(
     available: { type: Number },
     incoming: { type: Number, default: 0 },
     weight: { type: Number },
-    addVariant: { type: Boolean, default: false },
-    options: [{ option: { type: String }, optionVal: [{ type: String }] }],
+    variant: [{ name: { type: String }, options: [{ type: String }] }],
     productStatus: { type: String, enum: statusEnum, default: 'draft' },
     productType: { type: String, required: true },
     vendor: { type: String, required: true },

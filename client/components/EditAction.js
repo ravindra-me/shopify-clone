@@ -4,12 +4,18 @@ import { connect } from 'react-redux';
 function EditAddAction(props) {
   let [action, setAction] = useState({ isAction: false });
 
-  const { filterState } = props;
+  const { filterState, setFilter } = props;
   const handleAction = (actionType) => {
-    const data = props.dispatch(
-      updateAction(actionType, filterState.selectedProduct)
-    );
-    console.log(data);
+    if (actionType === 'delete') {
+      const data = props.dispatch(
+        updateAction(actionType, filterState.selectedProduct)
+      );
+      setFilter({ ...filterState, selectedProduct: [] });
+    } else {
+      const data = props.dispatch(
+        updateAction(actionType, filterState.selectedProduct)
+      );
+    }
   };
 
   return (
@@ -32,7 +38,12 @@ function EditAddAction(props) {
                 <li className="p-2" onClick={() => handleAction('draft')}>
                   Set as draft
                 </li>
-                <li className="p-2" onClick={() => {}}>
+                <li
+                  className="p-2"
+                  onClick={() => {
+                    handleAction('delete');
+                  }}
+                >
                   Delete Products
                 </li>
               </ul>
