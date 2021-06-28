@@ -57,8 +57,18 @@ function Sidebar(props) {
                     to="/admin/products"
                     activeClassName="active-sidebar text-green-500"
                     className="block pb-2 text-xl"
+                    exact
                   >
                     All Products
+                  </NavLink>
+                </li>
+                <li className="py-2">
+                  <NavLink
+                    to="/admin/products/collections"
+                    activeClassName="active-sidebar text-green-500"
+                    className="block pb-2 text-xl"
+                  >
+                    Collections
                   </NavLink>
                 </li>
               </ul>

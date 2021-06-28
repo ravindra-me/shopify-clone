@@ -42,8 +42,12 @@ function SingleProduct(props) {
         </div>
         <div className="w-16 border">
           <img
-            src={` https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNH4AliDQ44gcTsmcA9ccILZ_rdjpiaBsFwQ&usqp=CAU`}
-            className="w-4xl"
+            src={
+              product.images[0]
+                ? product.images[0]
+                : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNH4AliDQ44gcTsmcA9ccILZ_rdjpiaBsFwQ&usqp=CAU'
+            }
+            className="img h-12"
           />
         </div>
         <div className="break-words">{product.title}</div>

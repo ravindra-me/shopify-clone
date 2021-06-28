@@ -88,4 +88,5 @@ module.exports = {
       res.status(400).send(error);
     }
   },
+  addProductToCollectionAutomate: async (req, res, next) => {},
 };

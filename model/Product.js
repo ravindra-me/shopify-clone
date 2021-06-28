@@ -6,9 +6,13 @@ const statusEnum = ['active', 'draft', 'archived'];
 
 const ProductSchema = new Schema(
   {
-    title: { type: String, required: true },
+    title: { type: String, required: true, unique: true },
     description: { type: String },
-    images: [{ type: String, required: true }],
+    images: [
+      {
+        type: String,
+      },
+    ],
     price: { type: Number, required: true },
     comparePrice: { type: Number },
     costPerItem: { type: Number },
@@ -23,13 +27,16 @@ const ProductSchema = new Schema(
     vendor: { type: String, required: true },
     tags: [{ type: String }],
     slug: { type: String, unique: true },
+    collections: [{ type: Schema.Types.ObjectId, ref: 'Collection' }],
   },
   { timestamps: true }
 );
 
 ProductSchema.pre('save', async function (next) {
-  this.slug = slugify(this.title, '-');
-  next();
+  if (this.title && this.isModified('title')) {
+    this.slug = slugify(this.title.toLowerCase(), '-');
+    next();
+  }
 });
 
 const Product = mongoose.model('Product', ProductSchema);

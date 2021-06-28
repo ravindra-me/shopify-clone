@@ -6,6 +6,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var productRouter = require('./routes/product');
+var collectionRouter = require('./routes/collection');
 const mongoose = require('mongoose');
 
 var app = express();
@@ -43,6 +44,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use('/api/v1/products', productRouter);
+app.use('/api/v1/collection', collectionRouter);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 

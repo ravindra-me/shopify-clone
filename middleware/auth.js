@@ -1,6 +1,6 @@
-const slugify = require("slugify");
+const slugify = require('slugify');
 module.exports = {
   slug: function (title) {
-    return slugify(title, "-");
+    return slugify(title.toLowerCase(), '-');
   },
 };

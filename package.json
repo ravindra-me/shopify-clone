@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "NODE_ENV=development CLIENT=true node ./bin/www",
+    "start": "NODE_ENV=development node ./bin/www",
     "build": "NODE_ENV=production webpack --config ./webpack.config.js --mode=production",
     "server": "nodemon ./bin/www"
   },
@@ -24,6 +24,7 @@
     "react-router-dom": "^5.2.0",
     "redux": "^4.1.0",
     "redux-thunk": "^2.3.0",
+    "slug": "^5.1.0",
     "slugify": "^1.5.3",
     "webpack": "^5.40.0",
     "webpack-dev-middleware": "^5.0.0"

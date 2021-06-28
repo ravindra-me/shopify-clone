@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Sidebar from './Sidebar';
-import ProductRouter from './ProductRouter';
+import ProductRouter from './Products/ProductRouter';
 import Header from './Header';
-import AddProduct from './AddProduct';
+import AddProduct from './Products/AddProduct';
 import Home from './Home';
 function App() {
   return (

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { listAllProducts } from '../action/productActions';
+import { listAllProducts } from '../../action/productActions';
 import FilterForAll from './FilterForAll';
 function AllProducts(props) {
   return (

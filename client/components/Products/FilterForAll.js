@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { connect, useSelector } from 'react-redux';
-import { listAllProducts } from '../action/productActions';
+import { listAllProducts } from '../../action/productActions';
 import SingleProduct from './SingleProduct';
 import EditAddAction from './EditAction';
 function FilterForAll(props) {

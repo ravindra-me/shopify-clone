@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { updateAction } from '../action/productActions';
+import { updateAction } from '../../action/productActions';
 import { connect } from 'react-redux';
 function EditAddAction(props) {
   let [action, setAction] = useState({ isAction: false });

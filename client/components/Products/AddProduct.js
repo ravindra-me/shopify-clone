@@ -1,17 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useSelector } from 'react-redux';
-import { editSingleProduct, updateEditProduct } from '../action/productActions';
+import { uploadImage, addProduct } from '../../action/productActions';
 import { useParams, Link } from 'react-router-dom';
-import Variant from './Variant';
-function EditProduct(props) {
-  const { slug } = useParams();
-  const [product, updateProduct] = useState(null);
-  useEffect(async () => {
-    const data = await props.dispatch(editSingleProduct(slug));
-    updateProduct({ ...product, ...data });
-  }, []);
 
-  const handleChange = (event) => {
+import Variant from './Variant';
+
+function AddProduct(props) {
+  console.log('add product');
+  const { slug } = useParams();
+  const [product, updateProduct] = useState({
+    title: '',
+    description: '',
+    images: [],
+    price: 0,
+    comparePrice: 0,
+    costPerItem: 0,
+    trackQty: true,
+    outOfStock: false,
+    available: 0,
+    incoming: 0,
+    weight: 0,
+    productStatus: 'draft',
+    productType: '',
+    vendor: '',
+    tags: [],
+    optVariant: false,
+    color: false,
+    variant: [],
+  });
+
+  const handleChange = async (event) => {
+    console.log(event.target.name);
+
     if (event.target.name === 'tags') {
       if (event.target.value.includes(',') && event.charCode === 13) {
         console.log(product.tags.concat(event.target.value.split(',')));
@@ -30,15 +50,44 @@ function EditProduct(props) {
         });
 
         return;
+      } else {
+        return;
+      }
+    }
+
+    if (event.target.name === 'image') {
+      console.log('image');
+      const imageEtentions = ['jpg', 'jpeg', 'png', 'svg'];
+      if (
+        event.target.files[0] &&
+        imageEtentions.includes(event.target.files[0].name.split('.')[1])
+      ) {
+        const url = await uploadImage(event.target.files[0]);
+        console.log(url);
+        updateProduct({ ...product, images: product.images.concat(url) });
+      } else {
+        console.log(
+          'this file formate is not accepted please select another image'
+        );
       }
     } else {
       updateProduct({ ...product, [event.target.name]: event.target.value });
     }
   };
 
+  // https://api.cloudinary.com/v1_1/dylsn0syr ▼
+
   const handleSubmit = async () => {
     try {
-      const data = await props.dispatch(updateEditProduct(slug, product));
+      props.dispatch(
+        addProduct({
+          ...product,
+          price: +product.price,
+          comparePrice: +product.comparePrice,
+          costPerItem: +product.costPerItem,
+          variant: product.variant,
+        })
+      );
     } catch (error) {
       console.log(error);
     }
@@ -61,11 +110,13 @@ function EditProduct(props) {
     productStatus,
     productType,
     tags,
+    images,
     variant,
-    imgaes,
+    optVariant,
   } = product;
 
-  console.log(imgaes, variant, product);
+  const profit = price - costPerItem;
+  const margin = ((price - costPerItem) / price) * 100;
 
   return (
     <section className="w-full bg-gray-100 py-8">
@@ -78,16 +129,12 @@ function EditProduct(props) {
             >
               <i class="fas fa-arrow-left"></i>
             </Link>
-            <p className="mx-4">{title}</p>
-            <span className="px-2 bg-blue-500 rounded-full text-white">
-              {productStatus}
-            </span>
           </div>
           <div
             onClick={handleSubmit}
             className="px-4 py-2 bg-green-500 text-white font-bold"
           >
-            <i class="fas fa-upload"></i> Update
+            Add Product
           </div>
         </div>
         <main className="">
@@ -122,7 +169,7 @@ function EditProduct(props) {
               <div className="bg-white mt-2  p-8 rounded">
                 <h4 className="font-bold">Media</h4>
                 <div className="text-center border dash p-8  my-4 bg-blue-100">
-                  {imgaes.map((img) => {
+                  {images.map((img) => {
                     return (
                       <div className="relative w-40">
                         <img src={img} className=" w-full" />
@@ -131,7 +178,7 @@ function EditProduct(props) {
                           onClick={() =>
                             updateProduct({
                               ...product,
-                              imgaes: product.imgaes.filter(
+                              images: product.images.filter(
                                 (image) => image !== img
                               ),
                             })
@@ -201,22 +248,22 @@ function EditProduct(props) {
                   <div className="flex">
                     <div className="mx-8">
                       <p>Margin</p>
-                      <p>90%</p>
+                      <p>{margin ? margin : 0}</p>
                     </div>
                     <div>
                       <p>Profit</p>
-                      <p>₹1,800.00</p>
+                      <p>₹{profit}</p>
                     </div>
                   </div>
                 </div>
                 <div className="mt-1 bg-white rounded p-8 ">
-                  <h4 className="font-bold mb-8">Invertory</h4>
+                  <h4 className="font-bold mb-8">Inventory</h4>
                   <input
                     className="block border w-full p-1"
                     type="number"
                     value={available}
                     onChange={handleChange}
-                    name="weight"
+                    name="available"
                   />
                 </div>
                 <div className="mt-1 bg-white rounded p-8 ">
@@ -234,13 +281,19 @@ function EditProduct(props) {
                   <input
                     className="mr-4"
                     type="checkbox"
-                    checked={variant.length > 0 ? true : false}
+                    onChange={() => {
+                      updateProduct({
+                        ...product,
+                        optVariant: !product.optVariant,
+                        variant: [{ name: 'size', options: [] }],
+                      });
+                    }}
                   />
                   <label for="">
                     This product has multiple options, like different sizes or
                     colors
                   </label>
-                  {variant.length > 0 ? (
+                  {optVariant ? (
                     <Variant
                       variant={product.variant}
                       updateProduct={updateProduct}
@@ -305,29 +358,33 @@ function EditProduct(props) {
                     className="block border  p-1 mt-1"
                     type="text"
                     placeholder="vintage, cotton, summer"
-                    onKeyPress={handleChange}
                     name="tags"
+                    onKeyPress={handleChange}
                   />
                   <div className="flex justify-between items-center mt-4">
-                    {tags?.map((tag) => {
-                      return (
-                        <p className="px-4 py-2 bg-gray-200 rounded-2xl ">
-                          {tag}{' '}
-                          <span className="ml-2 cursor">
-                            <i
-                              className="fas fa-times"
-                              onClick={() => {
-                                let updateTags = tags.filter((t) => tag !== t);
-                                updateProduct({
-                                  ...product,
-                                  tags: updateTags,
-                                });
-                              }}
-                            ></i>
-                          </span>
-                        </p>
-                      );
-                    })}
+                    {tags.length > 0
+                      ? tags.map((tag) => {
+                          return (
+                            <p className="px-4 py-2 bg-gray-200 rounded-2xl ">
+                              {tag}{' '}
+                              <span className="ml-2 cursor">
+                                <i
+                                  className="fas fa-times"
+                                  onClick={() => {
+                                    let updateTags = tags.filter(
+                                      (t) => tag !== t
+                                    );
+                                    updateProduct({
+                                      ...product,
+                                      tags: updateTags,
+                                    });
+                                  }}
+                                ></i>
+                              </span>
+                            </p>
+                          );
+                        })
+                      : ''}
                   </div>
                 </div>
               </div>
@@ -342,4 +399,4 @@ const mapStateToProps = (state) => {
   return state;
 };
 
-export default connect(mapStateToProps)(EditProduct);
+export default connect(mapStateToProps)(AddProduct);
