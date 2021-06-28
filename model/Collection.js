@@ -10,6 +10,7 @@ const automatedConditionEnum = [
   'startWith',
   'endsWith',
   'contain',
+  'doesNotContain',
 ];
 const collectionConditionEnum = ['allCondition', 'anyCondition'];
 
@@ -19,7 +20,7 @@ const collection = new Schema(
     description: { type: String, required: true },
     images: { type: String },
     onlineStore: { type: Boolean, default: true },
-    availableDate: { type: Date },
+    availableDate: { type: Date, required: true },
     productsId: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
     manual: { type: Boolean, default: true },
     automated: [

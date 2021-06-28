@@ -10,7 +10,7 @@ function CollectionMain(props) {
           <ul className="flex items-center">
             <li className="ml-4">
               <Link
-                to="/admin/products/collection/new"
+                to="/admin/products/collections/new"
                 className="bg-green-500 px-4 py-2 text-white rounded inline-block	"
               >
                 Add Collection
@@ -20,7 +20,8 @@ function CollectionMain(props) {
         </nav>
       </header>
       <main>
-        <NoCollection />
+        {/* <NoCollection /> */}
+        <p>dfsfdf </p>
       </main>
     </section>
   );
