@@ -235,7 +235,7 @@ function EditProduct(props) {
                     type="number"
                     value={available}
                     onChange={handleChange}
-                    name="weight"
+                    name="available"
                   />
                 </div>
                 <div className="mt-1 bg-white rounded p-8 ">

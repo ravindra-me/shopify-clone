@@ -107,35 +107,6 @@ function FilterForAll(props) {
                 }}
               />
             </div>
-
-            {/* <input
-              type="text"
-              placeholder="Filter Products"
-              className="border"
-              value={filterState.userInput}
-              onChange={(event) => {
-                const data = filterState.allProducts;
-                const userInput = event.target.value.trim();
-                if (userInput.length > 0) {
-                  const filterData = [...data].filter((product) => {
-                    if (product.title.includes(event.target.value)) {
-                      return product;
-                    }
-                  });
-                  setFilter({
-                    ...filterState,
-                    allProducts: filterData,
-                    userInput,
-                  });
-                } else {
-                  setFilter({
-                    ...filterState,
-                    allProducts: props.products.allProducts,
-                    userInput,
-                  });
-                }
-              }}
-            /> */}
           </div>
           <div className="">
             <div className="rounded flex items-center">

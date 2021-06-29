@@ -6,7 +6,7 @@ const statusEnum = ['active', 'draft', 'archived'];
 
 const ProductSchema = new Schema(
   {
-    title: { type: String, required: true, unique: true },
+    title: { type: String, required: true, unique: true, lowercase: true },
     description: { type: String },
     images: [
       {
@@ -25,7 +25,7 @@ const ProductSchema = new Schema(
     productStatus: { type: String, enum: statusEnum, default: 'draft' },
     productType: { type: String, required: true },
     vendor: { type: String, required: true },
-    tags: [{ type: String }],
+    tags: [{ type: String, lowercase: true }],
     slug: { type: String, unique: true },
     collections: [{ type: Schema.Types.ObjectId, ref: 'Collection' }],
   },

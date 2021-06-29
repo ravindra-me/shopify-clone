@@ -1,0 +1,51 @@
+.footer {
+  background-color: black;
+  color: white;
+  .upperPart {
+    padding: 3rem 0;
+    border-bottom: 0.5px solid rgb(140, 140, 140);
+    a {
+      color: rgb(140, 140, 140);
+    }
+    address,
+    p {
+      color: rgb(140, 140, 140);
+    }
+    li,
+    p {
+      margin-bottom: 1rem;
+    }
+    h4 {
+      margin-bottom: 1.5rem;
+    }
+    input {
+      height: 2.5rem;
+      width: 78%;
+      border: none;
+      // outline: none;
+      padding-left: 0.5rem;
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+    button {
+      height: 2.5rem;
+      width: 20%;
+      outline: none;
+      border: none;
+      background-color: blue;
+    }
+  }
+
+  .lowerPart {
+    padding: 1rem 0;
+    color: rgb(160, 160, 160);
+
+    li {
+      font-size: 1.5rem;
+      margin-left: 2rem;
+    }
+    small {
+      font-size: 0.9rem;
+      width: fit-content;
+    }
+  }
+}

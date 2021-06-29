@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 const { Schema } = mongoose;
 
 const automatedNameEnum = ['tags', 'vendor', 'price'];
@@ -16,7 +17,7 @@ const collectionConditionEnum = ['allCondition', 'anyCondition'];
 
 const collection = new Schema(
   {
-    title: { type: String, required: true, unique: true },
+    title: { type: String, required: true, unique: true, lowercase: true },
     description: { type: String, required: true },
     images: { type: String },
     onlineStore: { type: Boolean, default: true },
@@ -26,24 +27,29 @@ const collection = new Schema(
     automated: [
       {
         name: { type: String, enum: automatedNameEnum },
-        condition: { type: String, enum: automatedConditionEnum },
+        condition: {
+          type: String,
+          enum: automatedConditionEnum,
+        },
         value: { type: String },
       },
     ],
     automatedType: { type: String, enum: collectionConditionEnum },
     isAutomated: { type: Boolean, default: false },
+    slug: { type: String, unique: true, lowercase: true },
   },
   {
     timestamps: true,
   }
 );
 
-// collection.pre('save', async function (next) {
-//   if (this.title && this.isModified('title')) {
-//     this.slug = slugify(this.title.toLowerCase(), '-');
-//     next();
-//   }
-// });
+collection.pre('save', async function (next) {
+  if (this.title && this.isModified('title')) {
+    this.slug = slugify(this.title.toLowerCase(), '-');
+    console.log(this.slug);
+    next();
+  }
+});
 
 const Collection = mongoose.model('Collection', collection);
 module.exports = Collection;

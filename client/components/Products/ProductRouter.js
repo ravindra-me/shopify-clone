@@ -5,6 +5,7 @@ import AddProduct from './AddProduct';
 import EditProduct from './EditProduct';
 import NewCollection from '../Collection/NewCollection';
 import CollectionMain from '../Collection/CollectionMain';
+import EditCollection from '../Collection/EditCollection';
 function ProductRouter({ history }) {
   const { path, url } = useRouteMatch();
   console.log(path, url);
@@ -21,6 +22,9 @@ function ProductRouter({ history }) {
       </Route>
       <Route path={`${path}/collections/new`} exact>
         <NewCollection />
+      </Route>
+      <Route path={`${path}/collections/:slug`} exact>
+        <EditCollection />
       </Route>
       <Route path={`${path}/:slug`} exact>
         <EditProduct />

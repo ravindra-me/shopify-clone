@@ -1,24 +1,21 @@
 import React from 'react';
+import Admin from './Admin';
+
 import { Route, Switch } from 'react-router-dom';
-import Sidebar from './Sidebar';
-import ProductRouter from './Products/ProductRouter';
-import Header from './Header';
-import AddProduct from './Products/AddProduct';
-import Home from './Home';
+
+import User from './User';
+import UserRoute from './user/UserRoute';
 function App() {
   return (
-    <>
-      <Header />
-      <section className="main-section">
-        <div className=" w-full flex justify-between">
-          <Sidebar className="" />
-          <Route path="/admin/products">
-            <ProductRouter />
-          </Route>
-          <Route path="/admin" component={Home} exact />
-        </div>
-      </section>
-    </>
+    <Switch>
+      <Route path="/">
+        <UserRoute />
+      </Route>
+      <Route path="/admin" exact>
+        <Admin />
+      </Route>
+    </Switch>
   );
 }
+
 export default App;

@@ -1,6 +1,7 @@
 const Product = require('../model/Product');
 const auth = require('../middleware/auth');
 const { find } = require('../model/Product');
+const Collection = require('../model/Collection');
 module.exports = {
   listAllProduct: async (req, res, next) => {
     try {
@@ -77,11 +78,20 @@ module.exports = {
           .set({ productStatus: action });
       }
       if (action === 'delete') {
+        const productID = await Product.find()
+          .where('slug')
+          .in(slugs)
+          .distinct('_id');
+        const collectionUpdate = await Collection.updateMany(
+          {
+            productsId: { $in: productID },
+          },
+          { $pull: { productsId: { $in: productID } } }
+        );
+
         const products = await Product.deleteMany({}).where('slug').in(slugs);
-        console.log(products);
       }
       const allProducts = await Product.find({});
-
       res.json({ products: allProducts });
     } catch (error) {
       console.log(error);
