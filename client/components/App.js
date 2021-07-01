@@ -8,11 +8,11 @@ import UserRoute from './user/UserRoute';
 function App() {
   return (
     <Switch>
+      <Route path="/admin">
+        <Admin />
+      </Route>
       <Route path="/">
         <UserRoute />
-      </Route>
-      <Route path="/admin" exact>
-        <Admin />
       </Route>
     </Switch>
   );

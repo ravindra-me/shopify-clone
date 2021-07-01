@@ -60,7 +60,7 @@ function NewCollection(props) {
     <section className="flex-80 px-8 bg-gray-200">
       <header className="flex justify-between align-center py-4 w-full">
         <Link
-          to="/admin/products/collection"
+          to="/admin/products/collections"
           className="px-4 py-1 bg-gray-300 rounded text-xl"
         >
           <i class="fas fa-arrow-left"></i>

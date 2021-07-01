@@ -22,10 +22,12 @@ function CollectionMain(props) {
   useEffect(async () => {
     const data = await dispatch(listCollection());
     console.log(data);
-    setState({ ...state, collections: data, nocollection: true });
+    if (data.length > 0) {
+      setState({ ...state, collections: data, nocollection: true });
+    }
   }, [state.filter]);
 
-  if (state.collections === false) {
+  if (state.collections === null) {
     return <NoCollection />;
   }
 

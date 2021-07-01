@@ -1,26 +1,26 @@
 import React from 'react';
 import { Switch, useRouteMatch, Route } from 'react-router-dom';
-import Login from './Login';
-import Signup from './Signup';
+
 import Home from './Home';
 import Header from './Header';
 import Footer from './Footer';
-
+import Account from './Account';
+import Collections from './Collections';
 function UserRoute() {
   const { path, url } = useRouteMatch();
-  console.log(`${path}/login`);
+  console.log(path);
   return (
     <>
       <Header />
       <Switch>
-        <Route path={`${path}login`} exact>
-          <Login />
-        </Route>
-        <Route path={`${path}signup`} exact>
-          <Signup />
-        </Route>
         <Route path="/" exact>
           <Home />
+        </Route>
+        <Route path={`${path}login`} exact>
+          <Account />
+        </Route>
+        <Route path={`${path}collections`} exact>
+          <Collections />
         </Route>
       </Switch>
       <Footer />
