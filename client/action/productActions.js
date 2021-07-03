@@ -1,8 +1,11 @@
 import axios from 'axios';
 
 const listAllProducts = (query) => {
+  console.log(query, 'slug');
   return async (dispatch) => {
-    const { data } = await axios.get(`/api/v1/products${query}`);
+    const { data } = query
+      ? await axios.get(`/api/v1/products${query}`)
+      : await axios.get(`/api/v1/products`);
     dispatch({
       type: 'LIST_PRODUCTS',
       data: data.products,

@@ -1,6 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { listAllProducts } from '../../action/productActions';
+import { connect } from 'react-redux';
+import Card from './Card';
+import products from '../../reducer/user';
+import Loader from '../Loader';
+function Home(props) {
+  // useEffect(() => {}, []);
+  console.log(props);
+  const [products, setProducts] = useState({
+    arrayOfProducts: null,
+  });
+  const { dispatch } = props;
+  useEffect(async () => {
+    const data = await dispatch(listAllProducts());
+    setProducts({ ...products, arrayOfProducts: data });
+  }, []);
+  if (!products.arrayOfProducts) {
+    return <Loader />;
+  }
 
-function Home() {
+  const { arrayOfProducts } = products;
+  const array =
+    arrayOfProducts.length >= 8 ? arrayOfProducts.slice(0, 9) : arrayOfProducts;
   return (
     <main id="home">
       <section class="hero">
@@ -52,71 +73,8 @@ function Home() {
             <p className="mt-4 text-gray-500">Top sale in this week</p>
           </div>
           <div className="grid grid-cols-4 gap-16">
-            {[
-              {
-                image: '/images/homeimg2.png',
-                title: 'ravindr adijg',
-                price: 500,
-                compairPrice: 1000,
-              },
-              {
-                image: '/images/homeimg2.png',
-                title: 'ravindr adijg',
-                price: 500,
-                compairPrice: 1000,
-              },
-
-              {
-                image: '/images/homeimg2.png',
-                title: 'ravindr adijg',
-                price: 500,
-                compairPrice: 1000,
-              },
-              {
-                image: '/images/laura-adai-dPy_zYLfh94-unsplash.jpg',
-                title: 'ravindr adijg',
-                price: 500,
-                compairPrice: 1000,
-              },
-            ].map((elem) => {
-              return (
-                <article className="card shadow-xl  shadow-xl rounded">
-                  <div className="font-0 relative image-container">
-                    <img src={elem.image} alt="" className="img card-image " />
-                    <div className="absolute top-0 bottom-0 left-0 right-0 flex flex-col justify-between">
-                      <div className="" className="text-xl">
-                        <p className="text-white">
-                          <span className=" bg-red-500 text-white px-4 py-1 text-xs mb-1 ">
-                            7%
-                          </span>
-                        </p>
-                        <p className="text-m mt-4 ">
-                          <span className=" bg-black text-white px-4 py-1 text-xs ">
-                            sale
-                          </span>
-                        </p>
-                      </div>
-                      <div className="  items-center justify-center   background-transpairent py-4 setting">
-                        <a href="" className="text-xl text-white mr-8">
-                          <i class="fas fa-cog"></i>
-                        </a>
-                        <a href="" className="text-xl text-white">
-                          <i class="fas fa-eye"></i>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="p-4 text-center">
-                    <h4 className="font-bold">{elem.title}</h4>
-                    <div>
-                      <span>{elem.price}</span>
-                      <span className="line-through text-red-500 ml-2">
-                        {elem.compairPrice}
-                      </span>
-                    </div>
-                  </div>
-                </article>
-              );
+            {array.map((product) => {
+              return <Card product={product} />;
             })}
           </div>
         </div>
@@ -125,4 +83,6 @@ function Home() {
   );
 }
 
-export default Home;
+const mapSateAndProps = (state) => state;
+
+export default connect(mapSateAndProps)(Home);

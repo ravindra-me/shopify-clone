@@ -155,6 +155,7 @@ function NewCollection(props) {
                     onChange={() =>
                       setCollection({
                         ...collection,
+                        manual: false,
                         isAutomated: !isAutomated,
                         automated: automated.concat({
                           name: 'vendor',

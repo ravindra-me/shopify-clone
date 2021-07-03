@@ -12,15 +12,13 @@
     height: 42rem;
   }
 
-  .best-seller {
+  .setting {
+    display: none;
+  }
+  .image-container:hover {
+    background: rgba($color: #000000, $alpha: 0.5);
     .setting {
-      display: none;
-    }
-    .image-container:hover {
-      background: rgba($color: #000000, $alpha: 0.5);
-      .setting {
-        display: flex;
-      }
+      display: flex;
     }
   }
 }

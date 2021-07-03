@@ -12,7 +12,6 @@ module.exports = {
       }
       console.log(query, 'query');
       const allProducts = await Product.find(query);
-
       res.json({ products: allProducts });
     } catch (error) {
       console.log(error);
