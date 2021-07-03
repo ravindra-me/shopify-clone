@@ -6,10 +6,10 @@ const user = new Schema(
   {
     email: { type: String, match: /@/, required: true, unique: true },
     firstName: { type: String, required: true, trim: true },
-    lastNumber: { type: String, trim: true },
+    lastName: { type: String, trim: true },
     password: { type: String, min: 8, max: 15, required: true, minlength: 8 },
     image: { type: String },
-    phone: { type: String, required: true },
+    phone: { type: Number, required: true },
     productId: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
     isAdmin: false,
     address: { type: String },
@@ -27,8 +27,8 @@ user.pre('save', async function (next) {
 });
 
 user.pre('save', function (next) {
-  if (this.email === 'ravindrarajpoot9628172@gmail.com') {
-    this.isAdmin = true;
+  if (this.email === "admin@gmail.com") {
+		this.isAdmin = true;
   }
   next();
 });
@@ -45,10 +45,6 @@ user.methods.verifyPassword = async function (password) {
 user.methods.signToken = async function () {
   var payload = {
     userId: this._id,
-    email: this.email,
-    firstName: this.firstName,
-    lastName: this.lastName,
-    isAdmin: this.isAdmin,
   };
   try {
     const token = jwt.sign(payload, process.env.SECRET);
@@ -65,6 +61,7 @@ user.methods.userJson = function (token) {
     email: this.email,
     bio: this.bio,
     image: this.image,
+    phone: this.phone,
     token: token,
     isAdmin: this.isAdmin,
   };

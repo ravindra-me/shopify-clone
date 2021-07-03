@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 function SingleCollection(props) {
   const { collection, setState, state } = props;
-  console.log(collection, state.slectedCollection);
+
   var checked = 0;
   return (
     <div className="bg-white px-8 flex py-4  border-b-2  text-left hover:bg-gray-100 px-4">

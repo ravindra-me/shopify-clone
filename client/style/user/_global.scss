@@ -1,4 +1,12 @@
 /*Global*/
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 html {
   font-size: 16px;
 }
@@ -10,7 +18,7 @@ body {
 }
 
 .container {
-  max-width: 1280px;
+  max-width: 1200px;
   width: 100%;
   margin: 0 auto;
   padding: 0 2rem;
@@ -32,6 +40,16 @@ a {
 .full-width {
   width: 100%;
   object-fit: cover;
+  -o-object-fit: cover;
+}
+.img {
+  object-fit: cover;
+  max-width: 100%;
+}
+
+.card-image {
+  width: 375px;
+  height: 375px;
 }
 
 /* Headings */
@@ -58,4 +76,15 @@ h5 {
 
 h6 {
   font-size: 0.66rem;
+}
+
+.width-25 {
+  width: 200px;
+}
+
+.width-500 {
+  width: 500px;
+}
+.width-30 {
+  width: 300px;
 }

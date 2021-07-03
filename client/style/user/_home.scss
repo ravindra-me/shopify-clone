@@ -1,75 +1,26 @@
-.home {
+#home {
   .hero {
-    background: url('/public/images/hero_slide_1_1944x.jpg');
+    background: url('https://cdn.shopify.com/s/files/1/0551/8001/files/slide-image-2_1920x700_crop_top.jpg?v=1610709146')
+      center;
+    background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
-    background-size: 100% 100%;
-    height: 70vh;
-    padding-top: 20rem;
-
-    h1 {
-      background-color: blue;
-      color: white;
-      width: fit-content;
-      padding: 0.5rem 1.2rem;
-    }
-
-    button {
-      display: inline-block;
-      background-color: black;
-      border: none;
-      color: white;
-      height: 2.5rem;
-      width: fit-content;
-      padding: 0 1rem;
-      margin-top: 1rem;
-    }
+    padding: 2rem 0;
+    margin-top: 60px;
+  }
+  .container {
+    height: 42rem;
   }
 
-  .accessType {
-    padding-bottom: 5rem;
-    .cards {
-      background: white;
-      height: 35rem;
-      text-align: center;
-      padding: 2rem;
-      margin-top: -6rem;
-      &:hover {
-        background-color: rgb(245, 245, 245);
+  .best-seller {
+    .setting {
+      display: none;
+    }
+    .image-container:hover {
+      background: rgba($color: #000000, $alpha: 0.5);
+      .setting {
+        display: flex;
       }
-    }
-  }
-
-  .jackets {
-    .viewAllJackets {
-      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-        url('/public/images/laura-adai-dPy_zYLfh94-unsplash.jpg');
-      background-repeat: no-repeat;
-      background-size: 100% 100%;
-      height: 24rem;
-    }
-    h3 {
-      background: blue;
-      color: white;
-      display: inline-block;
-      margin-top: 10rem;
-      width: fit-content;
-      padding: 0 0.5rem;
-    }
-    .allItems {
-      display: block;
-      color: white;
-      padding-left: 0.5rem;
-    }
-    .jacket-card {
-      text-align: center;
-      height: 20rem;
-    }
-    p {
-      color: black;
-    }
-    span {
-      color: gray;
-      font-size: 0.9rem;
     }
   }
 }

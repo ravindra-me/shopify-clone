@@ -1,7 +1,7 @@
 import React from 'react';
 function Header() {
   return (
-    <header className="py-4 header fixed w-full flex align-center bg-gray-300">
+    <header className="py-4  fixed w-full flex align-center bg-gray-300">
       <div class="container flex justify-between items-center px-4">
         <a href="" className="font-blod text-2xl">
           <i class="fab fa-shopify"></i> Logo

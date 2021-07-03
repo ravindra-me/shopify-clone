@@ -26,9 +26,17 @@ const updateEditProduct = (slug, updateData) => {
   return async (dispatch) => {
     try {
       console.log(updateData);
-      const { data } = await axios.put(`/api/v1/products/${slug}`, {
-        product: updateData,
-      });
+      const { data } = await axios.put(
+			`/api/v1/products/${slug}`,
+			{
+				product: updateData,
+			},
+			{
+				headers: {
+					Authorization: localStorage.getItem("token") || null,
+				},
+			}
+		);
 
       dispatch({
         type: 'PUT_PRODUCTS',
@@ -44,12 +52,20 @@ const updateAction = (action, slugs) => {
   return async (dispatch) => {
     try {
       console.log({ slugs, action });
-      const { data } = await axios.put('/api/v1/products', {
-        product: {
-          slugs: slugs,
-          action: action,
-        },
-      });
+      const { data } = await axios.put(
+			"/api/v1/products",
+			{
+				product: {
+					slugs: slugs,
+					action: action,
+				},
+			},
+			{
+				headers: {
+					Authorization: localStorage.getItem("token") || null,
+				},
+			}
+		);
       console.log(data);
       dispatch({
         type: 'LIST_PRODUCTS',
@@ -75,10 +91,17 @@ const uploadImage = async (name) => {
 const addProduct = (postData) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post('/api/v1/products/new', {
-        product: postData,
-      });
-      console.log(data, 'mata mar dia');
+      const { data } = await axios.post(
+			"/api/v1/products/new",
+			{
+				product: postData,
+			},
+			{
+				headers: {
+					Authorization: localStorage.getItem("token") || null,
+				},
+			}
+		);
     } catch (error) {}
   };
 };

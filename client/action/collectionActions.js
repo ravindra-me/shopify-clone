@@ -3,9 +3,17 @@ import axios from 'axios';
 let createCollection = (collectionData) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post('/api/v1/collection/new', {
-        collection: collectionData,
-      });
+      const { data } = await axios.post(
+			"/api/v1/collection/new",
+			{
+				collection: collectionData,
+			},
+			{
+				headers: {
+					Authorization:  localStorage.getItem("token") || null,
+				},
+			}
+		);
       dispatch({
         type: 'NEW_COLLECTION',
         singleCollection: data.collection,
@@ -13,6 +21,7 @@ let createCollection = (collectionData) => {
 
       return true;
     } catch (error) {
+      console.log(error);
       return false;
     }
   };
@@ -36,11 +45,19 @@ let listCollection = () => {
 let deleteCollection = (slugs) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.delete('/api/v1/collection/delete', {
-        data: {
-          slugs: slugs,
-        },
-      });
+      console.log(slugs, "abc")
+      const { data } = await axios.delete(
+			"/api/v1/collection/delete",
+			{
+				headers: {
+					Authorization: localStorage.getItem("token") || null,
+				},
+				data: {
+					slugs: slugs,
+				},
+			}
+		);
+
       dispatch({
         type: 'LIST_COLLECTION',
         data: data.collections,
