@@ -1,8 +1,8 @@
-import { set } from 'mongoose';
+import { connect } from 'react-redux';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Cart from './Cart';
-function Header() {
+function Header(props) {
   const [state, setState] = useState({
     isNav: false,
     sideNav: false,
@@ -67,9 +67,17 @@ function Header() {
         </div>
         <div>
           <ul className="flex  items-center">
-            <li className="ml-4">
-              <Link to="/login"> login </Link>
-            </li>
+            {props.customer.user ? (
+              <li className="ml-4">
+                <Link to="/profile">
+                  Hello, {props.customer.user.firstName.toUpperCase()}{' '}
+                </Link>
+              </li>
+            ) : (
+              <li className="ml-4">
+                <Link to="/login"> login </Link>
+              </li>
+            )}
             <li className="ml-4">
               <i class="fas fa-search"></i>
             </li>
@@ -87,4 +95,6 @@ function Header() {
   );
 }
 
-export default Header;
+const mapsStateToProps = (state) => state;
+
+export default connect(mapsStateToProps)(Header);

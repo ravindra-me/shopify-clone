@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-function Signup() {
+
+import { connect } from 'react-redux';
+
+import { newUser } from '../../action/user';
+
+function Signup(props) {
   const [state, setState] = useState({
     firstName: '',
     lastName: '',
@@ -114,7 +119,23 @@ function Signup() {
         <span className="text-red-500">{errors.phone}</span>
       </div>
 
-      <button className="hover:bg-black rounded">CREATE</button>
+      <button
+        className="hover:bg-black rounded"
+        onClick={(e) => {
+          e.preventDefault();
+          props.dispatch(
+            newUser({
+              firstName: state.firstName,
+              lastName: state.lastName,
+              email: state.email,
+              password: state.password,
+              phone: state.phone,
+            })
+          );
+        }}
+      >
+        CREATE
+      </button>
       <Link to="/login" className="mt-4 text-blue-500 inline-block">
         Already have account? login
       </Link>
@@ -122,4 +143,6 @@ function Signup() {
   );
 }
 
-export default Signup;
+const mapsStateToProps = (state) => state;
+
+export default connect(mapsStateToProps)(Signup);

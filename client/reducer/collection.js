@@ -1,6 +1,6 @@
 const initialState = {
-  allCollection: null,
-  singleCollection: null,
+	allCollection: null,
+	singleCollection: null,
 };
 
 function collection(state = initialState, action) {

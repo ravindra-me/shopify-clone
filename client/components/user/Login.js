@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-function Login() {
+import { connect } from 'react-redux';
+import { useHistory } from 'react-router';
+
+import { loginUser } from '../../action/user';
+
+function Login(props) {
+  const { push } = useHistory();
   const [state, setState] = useState({
     email: '',
     password: '',
@@ -60,10 +66,25 @@ function Login() {
         />
         <span className="text-red-500">{errors.password}</span>
       </div>
-      <button className="hover:bg-black rounded">Sign In</button>
+      <button
+        className="hover:bg-black rounded"
+        onClick={(e) => {
+          e.preventDefault();
+          props.dispatch(
+            loginUser({
+              email: state.email,
+              password: state.password,
+            })
+          );
+        }}
+      >
+        Sign In
+      </button>
       <a href="#">Forget Your Password?</a>
     </form>
   );
 }
 
-export default Login;
+const mapsStateToProps = (state) => state;
+
+export default connect(mapsStateToProps)(Login);

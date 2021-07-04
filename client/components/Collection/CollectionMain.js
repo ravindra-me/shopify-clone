@@ -63,9 +63,9 @@ function CollectionMain(props) {
                   <Link to="/admin/products?selectedView=all">All</Link>
                 </li>
                 <li>
-                  <div class="relative w-full mt-2">
-                    <div class="absolute top-2 left-3">
-                      <i class="fa fa-search text-gray-400 z-20 hover:text-gray-500"></i>
+                  <div className="relative w-full mt-2">
+                    <div className="absolute top-2 left-3">
+                      <i className="fa fa-search text-gray-400 z-20 hover:text-gray-500"></i>
                     </div>
                     <input
                       type="text"
@@ -105,7 +105,8 @@ function CollectionMain(props) {
           <EditActionCollection
             slectedCollection={slectedCollection}
             setState={setState}
-            state={state}
+            dispatch={props.dispatch}
+            prevState={state}
           />
         ) : (
           <>

@@ -2,11 +2,9 @@ const initialState = {
   user: null,
 };
 
-function products(state = initialState, action) {
+function customer(state = initialState, action) {
   switch (action.type) {
-    case 'NEW_USER':
-      return { ...state, user: action.data };
-    case 'EDIT_USER':
+    case 'USER_INFO':
       return { ...state, user: action.data };
     case 'PUT_PRODUCTS':
       console.log(action.data);
@@ -16,4 +14,4 @@ function products(state = initialState, action) {
   }
 }
 
-export default products;
+export default customer;

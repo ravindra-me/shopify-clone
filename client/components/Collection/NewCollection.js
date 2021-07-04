@@ -155,8 +155,8 @@ function NewCollection(props) {
                     onChange={() =>
                       setCollection({
                         ...collection,
-                        manual: false,
                         isAutomated: !isAutomated,
+                        manual: false,
                         automated: automated.concat({
                           name: 'vendor',
                           condition: 'equalTo',
@@ -196,7 +196,10 @@ function NewCollection(props) {
                     name="onlineStore"
                     checked={onlineStore}
                     onChange={(event) => {
-                      console.log(event.target.value);
+                      setCollection({
+                        ...collection,
+                        onlineStore: !collection.onlineStore,
+                      });
                     }}
                   />
                   <label className="ml-4">Online Store</label>
