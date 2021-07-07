@@ -38,11 +38,12 @@ function UserRoute(props) {
 
 function Auth({ path, user }) {
   return (
-    <>
-      <Route path="*">
-        {user.isAdmin ? <Redirect to="/admin" /> : <Redirect to="/" />}
-      </Route>
-    </>
+		<>
+			<Route path={`${path}checkout`} exact>
+				{/* <Checkout />  */}
+			</Route>
+			<Route path="*">{user.isAdmin ? <Redirect to="/admin" /> : <Redirect to="/" />}</Route>
+		</>
   );
 }
 

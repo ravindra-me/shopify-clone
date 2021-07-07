@@ -3,20 +3,29 @@ var Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const user = new Schema(
-  {
-    email: { type: String, match: /@/, required: true, unique: true },
-    firstName: { type: String, required: true, trim: true },
-    lastName: { type: String, trim: true },
-    password: { type: String, min: 8, max: 15, required: true, minlength: 8 },
-    image: { type: String },
-    phone: { type: Number, required: true },
-    productId: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
-    isAdmin: false,
-    address: { type: String },
-  },
-  {
-    timestamps: true,
-  }
+	{
+		email: { type: String, match: /@/, required: true, unique: true },
+		firstName: { type: String, required: true, trim: true },
+		lastName: { type: String, trim: true },
+		password: { type: String, min: 8, max: 15, required: true, minlength: 8 },
+		image: { type: String },
+		phone: { type: Number, required: true },
+		productId: [{ type: Schema.Types.ObjectId, ref: "Product" }],
+		isAdmin: false,
+		address: { type: String },
+		city: { type: String },
+		state: { type: String },
+		pincode: { type: String },
+		orders: [
+			{
+				type: Schema.Types.ObjectId,
+				ref: "Order",
+			},
+		],
+	},
+	{
+		timestamps: true,
+	}
 );
 
 user.pre('save', async function (next) {
