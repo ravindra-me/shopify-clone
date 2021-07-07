@@ -282,12 +282,14 @@ function AddProduct(props) {
                     className="mr-4"
                     type="checkbox"
                     onChange={() => {
+                      console.log('abc');
                       updateProduct({
                         ...product,
                         optVariant: !product.optVariant,
                         variant: [{ name: 'size', options: [] }],
                       });
                     }}
+                    checked={optVariant}
                   />
                   <label for="">
                     This product has multiple options, like different sizes or

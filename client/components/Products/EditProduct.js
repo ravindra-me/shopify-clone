@@ -235,7 +235,7 @@ function EditProduct(props) {
                     type="number"
                     value={available}
                     onChange={handleChange}
-                    name="weight"
+                    name="available"
                   />
                 </div>
                 <div className="mt-1 bg-white rounded p-8 ">
@@ -254,6 +254,14 @@ function EditProduct(props) {
                     className="mr-4"
                     type="checkbox"
                     checked={variant.length > 0 ? true : false}
+                    onChange={() => {
+                      console.log('abc');
+                      updateProduct({
+                        ...product,
+
+                        variant: [{ name: 'size', options: [] }],
+                      });
+                    }}
                   />
                   <label for="">
                     This product has multiple options, like different sizes or

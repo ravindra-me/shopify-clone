@@ -1,0 +1,24 @@
+#home {
+  .hero {
+    background: url('https://cdn.shopify.com/s/files/1/0551/8001/files/slide-image-2_1920x700_crop_top.jpg?v=1610709146')
+      center;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 2rem 0;
+    margin-top: 60px;
+  }
+  .container {
+    height: 42rem;
+  }
+
+  .setting {
+    display: none;
+  }
+  .image-container:hover {
+    background: rgba($color: #000000, $alpha: 0.5);
+    .setting {
+      display: flex;
+    }
+  }
+}
