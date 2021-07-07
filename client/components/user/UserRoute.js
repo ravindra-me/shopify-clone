@@ -8,12 +8,13 @@ import Header from './Header';
 import Footer from './Footer';
 import Account from './Account';
 import Collections from './Collections';
+import SingleProduct from './SingleProduct'
 
 import '../../style/user/main.scss';
 
 function UserRoute(props) {
   const { path, url } = useRouteMatch();
-
+  console.log(path);
   return (
     <>
       <Header />
@@ -47,9 +48,12 @@ function Auth({ path, user }) {
 
 function NoAuth({ path, user }) {
   return (
-    <Route path={`${path}login`} exact>
-      <Account />
-    </Route>
+    <Switch>
+      <Route path={`${path}login`} exact>
+        <Account />
+      </Route>
+      {/* <Route path={`${path}`} ></Route> */}
+    </Switch>
   );
 }
 

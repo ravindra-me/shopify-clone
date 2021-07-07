@@ -2,11 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 function Card(props) {
   console.log(props);
-  const { images, title, compairPrice, costPerItem } = props.product;
-  console.log(images);
+  const { images, title, compairPrice, costPerItem, slug } = props.product;
+  console.log(props.product, slug);
 
   return (
-    <Link className="card shadow-xl  shadow-xl rounded ">
+    <Link
+      className="card shadow-xl  shadow-xl rounded "
+      to={`/${slug}/singleproduct`}
+    >
       <div className="font-0 relative  ">
         <img
           src={
