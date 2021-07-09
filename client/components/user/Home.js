@@ -42,7 +42,7 @@ function Home(props) {
           </div>
         </div>
       </section>
-      <section className="">
+      <section className="fasion-style">
         <div class="container flex justify-between items-center">
           <div className="flex-40">
             <img src="/images/homeimg2.png" alt="" className="full-width" />

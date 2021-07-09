@@ -8,13 +8,15 @@ import Header from './Header';
 import Footer from './Footer';
 import Account from './Account';
 import Collections from './Collections';
-import SingleProduct from './SingleProduct'
+import SingleProduct from './SingleProduct';
 
 import '../../style/user/main.scss';
 
 function UserRoute(props) {
   const { path, url } = useRouteMatch();
-  console.log(path);
+
+  const { user } = props.customer;
+  console.log(`${path}/:slug/singleproduct`);
   return (
     <>
       <Header />
@@ -24,6 +26,9 @@ function UserRoute(props) {
         </Route>
         <Route path={`${path}collections`} exact>
           <Collections />
+        </Route>
+        <Route path={`${path}:slug/singleproduct`}>
+          <SingleProduct />
         </Route>
         {props.customer.user ? (
           <Auth path={path} user={props.customer.user} />
@@ -40,7 +45,7 @@ function Auth({ path, user }) {
   return (
     <>
       <Route path="*">
-        {user.isAdmin ? <Redirect to="/admin" /> : <Redirect to="/" />}
+        {user.isAdmin === true ? <Redirect to="/admin" /> : <Redirect to="/" />}
       </Route>
     </>
   );

@@ -8,9 +8,11 @@ function Header(props) {
     sideNav: false,
   });
 
-  console.log(state);
-
   const { isNav, sideNav } = state;
+  console.log(props.user);
+  // useEffect(() => {
+  //   console.log(props.customer.user);
+  // }, []);
 
   return (
     <header class="header   fixed w-full z-50 top-0 flex items-center  shadow">
@@ -18,7 +20,7 @@ function Header(props) {
         <nav className="">
           <ul className="flex items-center">
             <li className="mr-4">
-              <a href="">HOME</a>
+              <Link to="/">HOME</Link>
             </li>
             <li className="mr-4">
               <a href="">SHOP</a>
@@ -26,6 +28,7 @@ function Header(props) {
             <li className="mr-4">
               <a href="">PAGES</a>
             </li>
+
             <li
               className="mr-4 relative sub-nav "
               onClick={() => setState({ ...state, isNav: !isNav })}
@@ -58,6 +61,13 @@ function Header(props) {
                 </div>
               )}
             </li>
+            {/* {props.customer.user.isAdmin ? (
+              <li>
+                <Link to="/admin">Admin Dashbord</Link>
+              </li>
+            ) : (
+              ''
+            )} */}
           </ul>
         </nav>
         <div className="">

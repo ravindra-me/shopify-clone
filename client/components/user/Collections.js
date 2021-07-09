@@ -4,17 +4,17 @@ function Collections() {
   return (
     <>
       <main id="collection">
-        <section className="hero">
-          <div className="container flex justify-between items-center collections w-2/m mx-auto">
+        <section className="hero ">
+          <div className="container relative flex justify-between items-center collections w-2/m mx-auto">
             <div className="flex-40 text-left">
               <h1 className="text-6xl font-bold ">New Arrivals</h1>
               <h3 className="text-gray-500 my-4 text-2xl">Get up to 20% off</h3>
-              <button className="px-4 py-2 bg-gray-200 shadow-lg rounded">
+              <button className="px-4 py-2 bg-red-400 text-white shadow-lg rounded hover:bg-black">
                 {' '}
                 SHOP NOW
               </button>
             </div>
-            <div className="flex-30 font-0">
+            <div className=" width-40 font-0 absolute bottom-0 right-0">
               <img
                 src="/images/collectionhero.png"
                 alt="collection hero image"
@@ -23,7 +23,7 @@ function Collections() {
             </div>
           </div>
         </section>
-        <section className="mb-16">
+        <section className="mb-16 py-16">
           <div className="container flex justify-between ">
             <div className="flex-20 bg-gray-200 px-4 pb-4 self-start rounded">
               <div className="mb-4">
@@ -105,7 +105,7 @@ function Collections() {
                   },
                 ].map((elem) => {
                   return (
-                    <article className="card shadow-xl  shadow-xl rounded">
+                    <article className="card border shadow-xl  shadow-xl rounded">
                       <div className="font-0 relative image-container">
                         <img
                           src={elem.image}

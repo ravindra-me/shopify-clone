@@ -18,7 +18,7 @@ function Card(props) {
               : 'https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=webp&v=1530129081'
           }
           alt=""
-          className="img card-image hover:bg-gray-500"
+          className="img card-image "
           alt="product image"
         />
         <div className="absolute top-0 bottom-0 left-0 right-0 flex flex-col justify-between image-container">

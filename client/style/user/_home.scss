@@ -12,8 +12,17 @@
     height: 42rem;
   }
 
+  .fasion-style {
+    background: url('/public/images/wave.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
   .setting {
     display: none;
+  }
+  .card {
+    border: 0.15rem solid rgba($color: #000000, $alpha: 0.2);
   }
   .image-container:hover {
     background: rgba($color: #000000, $alpha: 0.5);
