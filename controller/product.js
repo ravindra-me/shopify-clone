@@ -1,6 +1,7 @@
 const Product = require('../model/Product');
 const auth = require('../middleware/auth');
 const { find } = require('../model/Product');
+const Collection = require('../model/Collection');
 module.exports = {
   listAllProduct: async (req, res, next) => {
     try {
@@ -11,7 +12,6 @@ module.exports = {
       }
       console.log(query, 'query');
       const allProducts = await Product.find(query);
-
       res.json({ products: allProducts });
     } catch (error) {
       console.log(error);
@@ -22,6 +22,8 @@ module.exports = {
     const { product } = req.body;
     try {
       const newProduct = await Product.create(product);
+      console.log(newProduct);
+
       res.json({ product: newProduct });
     } catch (error) {
       res.send(error);
@@ -75,12 +77,26 @@ module.exports = {
           .in(slugs)
           .set({ productStatus: action });
       }
-      const allProducts = await Product.find({});
+      if (action === 'delete') {
+        const productID = await Product.find()
+          .where('slug')
+          .in(slugs)
+          .distinct('_id');
+        const collectionUpdate = await Collection.updateMany(
+          {
+            productsId: { $in: productID },
+          },
+          { $pull: { productsId: { $in: productID } } }
+        );
 
+        const products = await Product.deleteMany({}).where('slug').in(slugs);
+      }
+      const allProducts = await Product.find({});
       res.json({ products: allProducts });
     } catch (error) {
       console.log(error);
       res.status(400).send(error);
     }
   },
+  addProductToCollectionAutomate: async (req, res, next) => {},
 };
