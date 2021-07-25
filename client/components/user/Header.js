@@ -9,7 +9,7 @@ function Header(props) {
   });
 
   const { isNav, sideNav } = state;
-  console.log(props.user);
+  console.log(props);
   // useEffect(() => {
   //   console.log(props.customer.user);
   // }, []);

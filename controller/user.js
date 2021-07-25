@@ -35,6 +35,7 @@ module.exports = {
       res.status(400).send(error);
     }
   },
+
   loginUser: async (req, res, next) => {
     const { email, password } = req.body.user;
     if (!email || !password) {
@@ -43,13 +44,14 @@ module.exports = {
     try {
       const user = await User.findOne({ email: email });
       if (!user) {
-        res.status(400).json({ error: "Email is not registered" });
+        res.status(400).json({ error: 'Email is not registered' });
       }
       const result = user.verifyPassword(password);
       if (!result) {
-        res.status(400).json({ error: "Invalid password" });
+        res.status(400).json({ error: 'Invalid password' });
       }
       var token = await user.signToken();
+      console.log(token);
       res.json({ user: user.userJson(token) });
     } catch (error) {
       res.status(400).send(error);
@@ -60,16 +62,21 @@ module.exports = {
     const { userId } = req.user;
     const { user } = req.body;
     try {
-      const updatedUser = await User.findByIdAndUpdate(userId, {
-        firstName: user.firstName,
-        isAdmin: user.isAdmin,
-        lastName: user.lastName,
-        image: user.image,
-        email: user.email,
-        number: user.number,
-        address: user.address,
-      }, { new: true });
-      const { firstName, isAdmin, lastName, image, email, number, address } = updatedUser;
+      const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        {
+          firstName: user.firstName,
+          isAdmin: user.isAdmin,
+          lastName: user.lastName,
+          image: user.image,
+          email: user.email,
+          number: user.number,
+          address: user.address,
+        },
+        { new: true }
+      );
+      const { firstName, isAdmin, lastName, image, email, number, address } =
+        updatedUser;
       res.json({
         user: {
           firstName,
@@ -84,5 +91,5 @@ module.exports = {
     } catch (error) {
       res.status(400).send(error);
     }
-  }
+  },
 };

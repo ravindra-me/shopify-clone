@@ -33,7 +33,8 @@ function EditProduct(props) {
           ...product,
           [event.target.name]: product.tags.concat(event.target.value),
         });
-
+        return;
+      } else {
         return;
       }
     }
@@ -53,6 +54,7 @@ function EditProduct(props) {
         );
       }
     } else {
+      console.log('hi');
       updateProduct({ ...product, [event.target.name]: event.target.value });
     }
   };
@@ -336,25 +338,29 @@ function EditProduct(props) {
                     name="tags"
                   />
                   <div className="flex justify-between items-center mt-4">
-                    {tags?.map((tag) => {
-                      return (
-                        <p className="px-4 py-2 bg-gray-200 rounded-2xl ">
-                          {tag}{' '}
-                          <span className="ml-2 cursor">
-                            <i
-                              className="fas fa-times"
-                              onClick={() => {
-                                let updateTags = tags.filter((t) => tag !== t);
-                                updateProduct({
-                                  ...product,
-                                  tags: updateTags,
-                                });
-                              }}
-                            ></i>
-                          </span>
-                        </p>
-                      );
-                    })}
+                    {tags.length > 0
+                      ? tags?.map((tag) => {
+                          return (
+                            <p className="px-4 py-2 bg-gray-200 rounded-2xl ">
+                              {tag}{' '}
+                              <span className="ml-2 cursor">
+                                <i
+                                  className="fas fa-times"
+                                  onClick={() => {
+                                    let updateTags = tags.filter(
+                                      (t) => tag !== t
+                                    );
+                                    updateProduct({
+                                      ...product,
+                                      tags: updateTags,
+                                    });
+                                  }}
+                                ></i>
+                              </span>
+                            </p>
+                          );
+                        })
+                      : ''}
                   </div>
                 </div>
               </div>

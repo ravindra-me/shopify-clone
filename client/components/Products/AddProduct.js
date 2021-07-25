@@ -29,6 +29,8 @@ function AddProduct(props) {
     variant: [],
   });
 
+  console.log(tags);
+
   const handleChange = async (event) => {
     console.log(event.target.name);
 

@@ -27,8 +27,8 @@ user.pre('save', async function (next) {
 });
 
 user.pre('save', function (next) {
-  if (this.email === "admin@gmail.com") {
-		this.isAdmin = true;
+  if (this.email === 'admin@gmail.com') {
+    this.isAdmin = true;
   }
   next();
 });
@@ -59,8 +59,6 @@ user.methods.userJson = function (token) {
     firstName: this.firstName,
     lastName: this.lastName,
     email: this.email,
-    bio: this.bio,
-    image: this.image,
     phone: this.phone,
     token: token,
     isAdmin: this.isAdmin,
